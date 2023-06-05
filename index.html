@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Password Generator</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <meta name="description" content="Random Password Generator">
+    <meta name="keywords" content="Random Password Generator">
+    <meta name="author" content="Divya Patel">
+    
+  <style>
+    body {
+      background: linear-gradient(45deg, #ff8a00, #e52e71);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    input[type="checkbox"] {
+      margin-left: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #ff8a00, #e52e71);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    #generatedPassword {
+      margin-top: 10px;
+      padding: 5px;
+      font-size: 16px;
+      width: 100%;
+      text-align: center;
+    }
+
+
+    @media only screen and (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+      #generatedPassword{
+        padding: 0px;
+
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Random Password Generator</h1>
+    <div class="form-group">
+      <label>Password Length:</label>
+      <input type="range" id="passwordLength" min="4" max="50" value="12">
+      <span id="passwordLengthOutput">12</span>
+    </div>
+    <div class="form-group">
+      <label>Include Numbers:</label>
+      <input type="checkbox" id="includeNumbers" checked>
+    </div>
+    <div class="form-group">
+      <label>Include Symbols:</label>
+      <input type="checkbox" id="includeSymbols" checked>
+    </div>
+    <button onclick="generatePassword()">Generate Password</button>
+    <div class="form-group">
+      <label>Generated Password:</label>
+      <input type="text" id="generatedPassword" readonly>
+    </div>
+  </div>
+
+  <script>
+    function generatePassword() {
+      const lengthInput = document.getElementById('passwordLength');
+      const includeNumbersInput = document.getElementById('includeNumbers');
+      const includeSymbolsInput = document.getElementById('includeSymbols');
+      const generatedPasswordInput = document.getElementById('generatedPassword');
+
+      const length = lengthInput.value;
+      const includeNumbers = includeNumbersInput.checked;
+      const includeSymbols = includeSymbolsInput.checked;
+
+      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const numbers = '0123456789';
+      const symbols = '!@#$%^&*()-_=+[]{}|;:,.<>/?';
+
+      let validChars = chars;
+      if (includeNumbers) {
+        validChars += numbers;
+      }
+      if (includeSymbols) {
+        validChars += symbols;
+      }
+
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * validChars.length);
+        password += validChars.charAt(randomIndex);
+      }
+
+      generatedPasswordInput.value = password;
+    }
+
+    const passwordLengthInput = document.getElementById('passwordLength');
+    const passwordLengthOutput = document.getElementById('passwordLengthOutput');
+
+    passwordLengthInput.addEventListener('input', function() {
+      passwordLengthOutput.textContent = this.value;
+    });
+  </script>
+</body>
+</html>
